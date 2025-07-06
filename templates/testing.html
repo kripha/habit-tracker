@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testing</title>
+
+    <!-- Add jquery source code to interact with Flask-->
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+</head>
+<style>
+    #habitsContainer {
+        display: flex;
+        justify-content: space-around;
+    }
+    .habit {
+        background-color: lightcoral;
+        padding: 10px;
+        font-size: larger;
+        border-radius: 20px;
+    }
+    #weekdaysContainer {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 20px;
+        /* background-color: lightpink; */
+    }
+    .weekdayCol {
+        background-color: aqua;
+        width: 100%;
+        border: 1px solid black;
+    }
+    .weekday{
+        background-color: lightpink;
+    }
+</style>
+<body>
+    <div id="habitsContainer">
+        <div class="habit" draggable="true">reading</div>
+        <div class="habit" draggable="true">duolingo</div>
+        <div class="habit" draggable="true">coding</div>
+    </div>
+
+    <div id="weekdaysContainer">
+        <div class="weekdayCol">
+            <div class="weekday">Sun</div>
+        </div>
+        <div class="weekdayCol">
+            <div class="weekday">Mon</div>
+        </div>
+        <div class="weekdayCol">
+            <div class="weekday">Tues</div>
+        </div>
+        <div class="weekdayCol">
+            <div class="weekday">Wed</div>
+        </div>
+        <div class="weekdayCol">
+            <div class="weekday">Thurs</div>
+        </div>
+        <div class="weekdayCol">
+            <div class="weekday">Fri</div>
+        </div>
+        <div class="weekdayCol">
+            <div class="weekday">Sat</div>
+        </div>
+
+    </div>
+</body>
+<script src="../static/test.js"></script>
+</html>
