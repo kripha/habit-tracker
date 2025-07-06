@@ -29,5 +29,20 @@ def add_new_habit():
     print(data)
     return jsonify() # return empty content
 
+@app.route('/add-used-habit', methods=['POST'])
+def add_used_habit():
+    global data
+
+    json_data = request.get_json()
+    habit_name = json_data["habit_name"]
+    old_weekday = json_data["old_weekday"]
+    new_weekday = json_data["new_weekday"]
+
+    data[old_weekday.lower()].remove(habit_name)
+    data[new_weekday.lower()].append(habit_name)
+    print(data)
+    return jsonify() # return empty content
+
+
 if __name__ == '__main__':
     app.run(debug=True, port=5001)
