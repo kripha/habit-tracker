@@ -79,7 +79,9 @@ function validHexColor(hexcolor) {
 
 function resetModalBox() {
     let submitButton = document.getElementById("submitHabit");
+    let deleteButton = document.getElementById("deleteHabit");
     let modalBox = document.getElementById("modalBox");
+    let modalContent = document.getElementById("modalContent");
 
     document.getElementById("missingColor").style.color = "antiquewhite";
     document.getElementById("missingName").style.color = "antiquewhite";
@@ -87,6 +89,11 @@ function resetModalBox() {
     document.getElementById("habitColorInput").value = "";
     submitButton.innerHTML = "SUBMIT";
     submitButton.onclick = () => submitNewHabit(modalBox);
+
+    // remove the delete button if delete button is present
+    if (deleteButton != null) {
+        modalContent.removeChild(deleteButton);
+    }
 }
 
 function addNewHabitOption(name, color) {
@@ -179,13 +186,44 @@ function saveChanges(habitElement, modalBox) {
     }
 }
 
+function deleteHabitOption(habitTarget, modalBox) {
+    let habitName = habitTarget.innerHTML;
+
+    // delete from cols and habitsContainer
+    let allHabitElements = document.querySelectorAll("." + habitName);
+    allHabitElements.forEach((item) => {
+        item.parentElement.removeChild(item);
+    })
+    
+    // delete from server data
+    $.ajax({
+        type: "POST",
+        url: "delete-habit-option",
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify({"habit_name": habitName})
+    })
+
+    modalBox.style.display = "none";
+    resetModalBox();
+    
+}
+
 function openEditBox(modalBox, submitHabit, habitTarget) {
     modalBox.style.display = "flex";
 
     // replace submit button with save button
-    // submitHabit.id = "saveChange";
     submitHabit.innerHTML = "SAVE";
     submitHabit.onclick = () => saveChanges(habitTarget, modalBox);
+
+    // add deleteButton
+    let modalContent = document.getElementById("modalContent");
+    let deleteButton = document.createElement("button");
+    deleteButton.id = "deleteHabit";
+    deleteButton.innerHTML = "DELETE";
+    deleteButton.onclick = () => deleteHabitOption(habitTarget, modalBox);
+    modalContent.appendChild(deleteButton);
+    
 }
 
 function addHabitOptionEvents(habitOption) {

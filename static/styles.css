@@ -147,11 +147,13 @@ body, html {
     left: 25%;
     top: 15%;
     line-height: 0%;
+    padding-bottom: 2%;
     /* position: relative; */
 }
 #closeContainer {
     display: flex;
     flex-direction: row-reverse;
+    margin-bottom: 0;
 }
 #closeButton {
     /* display: flex;
@@ -162,7 +164,7 @@ body, html {
     /* border: 2px solid red; */
 }
 .inputTitle {
-    margin-top: 7%;
+    margin-top: 5%;
     letter-spacing: 3px;
     /* border: 2px solid red; */
 }
@@ -182,9 +184,8 @@ input:focus {
     border: 2px solid black;
     outline: none;
 }
-#submitHabit {
+#submitHabit, #deleteHabit {
     margin-top: 2%;
-    margin-bottom: 10%;
     padding: 10px 20px;
     border-radius: 30px;
     font-family: "Poppins", sans-serif;
@@ -192,8 +193,15 @@ input:focus {
     font-size: 18px;
     letter-spacing: 3px;
 }
+#submitHabit {
+    width: 25%;
+}
 .errorMessage {
     color: antiquewhite;
     letter-spacing: 3px;
     font-size: smaller;
+}
+#deleteHabit {
+    background-color: #ff686b;
+    font-size: 10px;
 }

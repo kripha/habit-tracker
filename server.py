@@ -71,6 +71,19 @@ def delete_habit_from_weekday():
 
     return jsonify()
 
+@app.route('/delete-habit-option', methods=["POST"])
+def delete_habit_option():
+    global data
+
+    json_data = request.get_json()
+    habit_name = json_data["habit_name"]
+
+    # problem is that when you remove an item, the indices get thrown off
+    for key, habit_list in data.items():
+        data[key] = [x for x in habit_list if x != habit_name]
+
+    print(data)
+    return jsonify()
 
 if __name__ == '__main__':
     app.run(debug=True, port=5001)
