@@ -16,6 +16,7 @@
     rel="stylesheet">
 
     <link rel="stylesheet" href="../static/styles.css">
+    <link rel="icon" type="images/x-icon" href="../static/images/checklist.png">
 
 </head>
 <body>
@@ -58,9 +59,9 @@
         </div>
     </div>
     <div id="habitsContainer">
-        <div class="habit" draggable="true">read</div>
-        <div class="habit" draggable="true">yoga</div>
-        <div class="habit" draggable="true">grocery</div>
+        <div class="habit read" draggable="true">read</div>
+        <div class="habit yoga" draggable="true">yoga</div>
+        <div class="habit grocery" draggable="true">grocery</div>
     </div>
     <div id="goalContainer">
         GOAL
@@ -69,9 +70,8 @@
             abide my phone downtime settings
         </div>
     </div>
-    <div id="addHabitBox">
-        <div id="addHabitContent">
-            <!-- <div id="closeButton">&times;</div> -->
+    <div id="modalBox">
+        <div id="modalContent">
             <div id="closeContainer">
                 <p id="closeButton">&times;</p>
             </div>
@@ -85,6 +85,7 @@
             <button id="submitHabit">SUBMIT</button>
         </div>
     </div>
+
 </body>
 <script src="../static/main.js"></script>
 </html>

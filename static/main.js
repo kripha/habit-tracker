@@ -66,38 +66,124 @@ function validHexColor(hexcolor) {
     return true;
 }
 
-function resetAddHabitBox() {
+function resetModalBox() {
+    let submitButton = document.getElementById("submitHabit");
+    let modalBox = document.getElementById("modalBox");
+
     document.getElementById("missingColor").style.color = "antiquewhite";
     document.getElementById("missingName").style.color = "antiquewhite";
     document.getElementById("habitNameInput").value = "";
     document.getElementById("habitColorInput").value = "";
+    submitButton.innerHTML = "SUBMIT";
+    submitButton.onclick = () => submitNewHabit(modalBox);
 }
-
 
 function addNewHabitOption(name, color) {
     let habitsContainer = document.getElementById("habitsContainer");
     let newHabitElement = document.createElement("div");
     newHabitElement.classList.add("habit");
+    newHabitElement.classList.add(name);
     newHabitElement.draggable = "true";
     newHabitElement.innerHTML = name;
     newHabitElement.style.backgroundColor = "#" + color;
 
-    newHabitElement.addEventListener("dragstart", (event) => {
-        currDraggedObject = event.target;
-    })
+    addHabitOptionEvents(newHabitElement);
     habitsContainer.appendChild(newHabitElement);
     // <div class="habit" draggable="true">grocery</div>
-
 }
 
-/* track which habit is being dragged */
-let habits = document.querySelectorAll(".habit");
-habits.forEach((item, index) => {
-    item.addEventListener("dragstart", (event) => {
+function checkInputFields(newHabitColor, newHabitName) {
+    let valid = true;
+    if (newHabitColor.value.length == 0) {
+        document.getElementById("missingColor").style.color = "red";
+        document.getElementById("missingColor").innerHTML = "Missing habit color";
+        newHabitColor.focus();
+        valid = false;
+    } else {
+        // check if hex color is valid
+        if (validHexColor(newHabitColor.value) == false) {
+            document.getElementById("missingColor").style.color = "red";
+            document.getElementById("missingColor").innerHTML = "Invalid hex color";
+            valid = false;
+            newHabitColor.focus();
+        } else {
+            document.getElementById("missingColor").style.color = "antiquewhite";
+        }
+    }
+    if (newHabitName.value.length == 0) {
+        document.getElementById("missingName").style.color = "red";
+        newHabitName.focus();
+        valid = false;
+    } else {
+        document.getElementById("missingName").style.color = "antiquewhite";
+    }
+    return valid;
+}
+
+function submitNewHabit(modalBox) {
+    let newHabitName = document.getElementById("habitNameInput");
+    let newHabitColor = document.getElementById("habitColorInput");
+    
+    // check input fields
+    let validInputs = checkInputFields(newHabitColor, newHabitName);
+    
+    // if everything is good to go, add new habit
+    if (validInputs == true) {
+        modalBox.style.display = "none";
+        addNewHabitOption(newHabitName.value, newHabitColor.value);
+        resetModalBox();
+    }
+}
+
+function saveChanges(habitElement, modalBox) {
+    let newHabitName = document.getElementById("habitNameInput");
+    let newHabitColor = document.getElementById("habitColorInput");
+    
+    // check input fields
+    let validInputs = checkInputFields(newHabitColor, newHabitName);
+
+    // if everything is good to go, update habit option
+    if (validInputs == true) {
+        let oldHabitName = habitElement.innerHTML;
+        let allHabitElements = document.querySelectorAll("." + oldHabitName);
+
+        allHabitElements.forEach((item) => {
+            item.classList.remove(oldHabitName);
+            item.classList.add(newHabitName.value);
+            item.style.backgroundColor = "#" + newHabitColor.value;
+            item.innerHTML = newHabitName.value;
+        })
+        resetModalBox();
+        modalBox.style.display = "none";
+    }
+}
+
+function openEditBox(modalBox, submitHabit, habitTarget) {
+    modalBox.style.display = "flex";
+
+    // replace submit button with save button
+    // submitHabit.id = "saveChange";
+    submitHabit.innerHTML = "SAVE";
+    submitHabit.onclick = () => saveChanges(habitTarget, modalBox);
+}
+
+function addHabitOptionEvents(habitOption) {
+    habitOption.addEventListener("dragstart", (event) => {
         currDraggedObject = event.target;
     })
-})
 
+    // show a modalBox in edit mode when a habit option is double clicked
+    habitOption.addEventListener("dblclick", (event) => {
+        let modalBox = document.getElementById("modalBox");
+        let submitHabit = document.getElementById("submitHabit");
+        let habitTarget = event.target;
+        openEditBox(modalBox, submitHabit, habitTarget);
+    })
+}
+
+/* initialize habit events */
+let habits = document.querySelectorAll(".habit");
+habits.forEach((item) => addHabitOptionEvents(item));
 
 /* make each habit col a droppable zone */
 let habitCols = document.querySelectorAll(".habitCol");
@@ -115,9 +201,6 @@ habitCols.forEach((item) => {
             addUsedHabit(item);
         }
         console.log("A dropped event has occurred")
-
-
-
     })
 })
 
@@ -130,58 +213,26 @@ weekdayCols.forEach((item, index) => {
 
 })
 
-/* show and close addHabitBox */
-let addHabitBox = document.getElementById("addHabitBox");
+/* show and close modalBox */
+let modalBox = document.getElementById("modalBox");
 let addIcon = document.getElementById("addIcon");
 addIcon.onclick = (event) => {
-    addHabitBox.style.display = "flex";
+    modalBox.style.display = "flex";
     document.getElementById("habitNameInput").focus();
 }
 let closeButton = document.getElementById("closeButton");
 closeButton.onclick = (event) => {
-    addHabitBox.style.display = "none";
-    resetAddHabitBox();
+    modalBox.style.display = "none";
+    resetModalBox();
 }
 
 /* add new habit option when submit button is clicked */
 let submitHabit = document.getElementById("submitHabit");
-submitHabit.onclick = (event) => {
-    let newHabitName = document.getElementById("habitNameInput");
-    let newHabitColor = document.getElementById("habitColorInput");
-    let validInputs = true;
-    
-    // check input fields
-    if (newHabitColor.value.length == 0) {
-        document.getElementById("missingColor").style.color = "red";
-        document.getElementById("missingColor").innerHTML = "Missing habit color";
-        newHabitColor.focus();
-        validInputs = false;
-    } else {
-        // check if hex color is valid
-        if (validHexColor(newHabitColor.value) == false) {
-            document.getElementById("missingColor").style.color = "red";
-            document.getElementById("missingColor").innerHTML = "Invalid hex color";
-            validInputs = false;
-            newHabitColor.focus();
-        } else {
-            document.getElementById("missingColor").style.color = "antiquewhite";
-        }
-    }
-    if (newHabitName.value.length == 0) {
-        document.getElementById("missingName").style.color = "red";
-        newHabitName.focus();
-        validInputs = false;
-    } else {
-        document.getElementById("missingName").style.color = "antiquewhite";
-    }
-    
-    // if everything is good to go, add new habit
-    if (validInputs == true) {
-        addHabitBox.style.display = "none";
-        console.log(newHabitName.value.length + " should be the value/name?");
-        addNewHabitOption(newHabitName.value, newHabitColor.value);
-        resetAddHabitBox();
-    }
-}
+submitHabit.onclick = () => submitNewHabit(modalBox);
 
 
+/* show a modalBox in edit mode when a habit option is double clicked */
+
+
+
+// add delete button
