@@ -81,18 +81,26 @@ function resetModalBox() {
     let submitButton = document.getElementById("submitHabit");
     let deleteButton = document.getElementById("deleteHabit");
     let modalBox = document.getElementById("modalBox");
-    let modalContent = document.getElementById("modalContent");
+    let currHabitName = document.getElementById("currHabitName");
 
     document.getElementById("missingColor").style.color = "antiquewhite";
     document.getElementById("missingName").style.color = "antiquewhite";
     document.getElementById("habitNameInput").value = "";
     document.getElementById("habitColorInput").value = "";
+    // document.getElementById("habitName").innerHTML = 'habit name';
+    // document.getElementById("habitColor").innerHTML = 'habit color';
+
     submitButton.innerHTML = "SUBMIT";
     submitButton.onclick = () => submitNewHabit(modalBox);
 
     // remove the delete button if delete button is present
     if (deleteButton != null) {
-        modalContent.removeChild(deleteButton);
+        deleteButton.parentElement.removeChild(deleteButton);
+    }
+
+    // remove currHabit title
+    if (currHabitName != null) {
+        currHabitName.parentElement.removeChild(currHabitName);
     }
 }
 
@@ -223,7 +231,19 @@ function openEditBox(modalBox, submitHabit, habitTarget) {
     deleteButton.innerHTML = "DELETE";
     deleteButton.onclick = () => deleteHabitOption(habitTarget, modalBox);
     modalContent.appendChild(deleteButton);
-    
+
+    // add currHabit name to top
+    let currHabitName = document.createElement("p");
+    currHabitName.id = "currHabitName";
+    currHabitName.innerHTML = habitTarget.innerHTML.toUpperCase();
+    document.getElementById("closeContainer").appendChild(currHabitName);
+
+    // update input titles
+    // let nameTitle = document.getElementById("habitName");
+    // let colorTitle = document.getElementById("habitColor");
+    // nameTitle.innerHTML = "new habit name";
+    // colorTitle.innerHTML = "new habit color";
+
 }
 
 function addHabitOptionEvents(habitOption) {
