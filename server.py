@@ -58,5 +58,19 @@ def update_habit_name():
     print(data)
     return jsonify()
 
+@app.route('/delete-habit-from-weekday', methods=['POST'])
+def delete_habit_from_weekday():
+    global data
+
+    json_data= request.get_json()
+    habit_name = json_data["habit_name"]
+    weekday = json_data["weekday"]
+
+    data[weekday.lower()].remove(habit_name)
+    print(data)
+
+    return jsonify()
+
+
 if __name__ == '__main__':
     app.run(debug=True, port=5001)

@@ -10,9 +10,20 @@ function addNewHabit(habitCol) {
         currDraggedObject = event.target;
     })
 
-    // addEventListen for double tap to delete
+    // addEventListener for double tap to delete
     newHabitElement.addEventListener("dblclick", (event) => {
-        console.log("Double click!");
+        
+        let weekday = habitCol.parentElement.firstElementChild.innerHTML;
+
+        // delete habit from server data
+        $.ajax({
+            type: "POST",
+            url: "delete-habit-from-weekday",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({"habit_name": event.target.innerHTML, "weekday": weekday})
+        })
+
         newHabitElement.remove();
     })
 
@@ -162,7 +173,7 @@ function saveChanges(habitElement, modalBox) {
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify({"new_habit_name": newHabitName.value, "old_habit_name": oldHabitName})
         });
-        
+
         resetModalBox();
         modalBox.style.display = "none";
     }
