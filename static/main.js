@@ -2,7 +2,7 @@ let currDraggedObject = null;
 let count = 0;
 
 // helper functions
-function addNewHabit(weekdayCol) {
+function addNewHabit(habitCol) {
     let newHabitElement = currDraggedObject.cloneNode(true);
 
     // addEventListener because that isn't cloned
@@ -10,9 +10,19 @@ function addNewHabit(weekdayCol) {
         currDraggedObject = event.target;
     })
 
-    weekdayCol.append(newHabitElement);
+    // addEventListen for double tap to delete
+    newHabitElement.addEventListener("dblclick", (event) => {
+        console.log("Double click!");
+        newHabitElement.remove();
+    })
 
-    let weekday = weekdayCol.firstElementChild.textContent;
+    // change height and width accordingly
+    newHabitElement.style.height = "10%";
+    newHabitElement.style.width = "70%";
+
+    habitCol.append(newHabitElement);
+
+    let weekday = habitCol.firstElementChild.textContent;
     let habitName = newHabitElement.innerHTML;
     $.ajax({
         type: "POST",
@@ -23,11 +33,11 @@ function addNewHabit(weekdayCol) {
     });
 }
 
-function addUsedHabit(newWeekdayCol) {
+function addUsedHabit(newHabitCol) {
     let habitName = currDraggedObject.innerHTML;
-    let oldWeekdayCol = currDraggedObject.parentElement; //get the weekdayCol element
-    let oldWeekday = oldWeekdayCol.firstElementChild.textContent; //the first element of weekdayCol is assumed to be weekday element
-    let newWeekday = newWeekdayCol.firstElementChild.textContent;
+    let oldHabitCol = currDraggedObject.parentElement; //get the habitCol element
+    let oldWeekday = oldHabitCol.parentElement.firstElementChild.textContent; //the first element of habitCol is assumed to be weekday element
+    let newWeekday = newHabitCol.parentElement.firstElementChild.textContent;
 
     $.ajax({
         type: "POST",
@@ -38,7 +48,7 @@ function addUsedHabit(newWeekdayCol) {
     })
 
     // move curr habit to new weekday
-    newWeekdayCol.append(currDraggedObject);
+    newHabitCol.append(currDraggedObject);
 
 }
 // make habits into draggable objects
@@ -50,9 +60,10 @@ habits.forEach((item, index) => {
     })
 })
 
-// make each weekdayCol a drop zone
-let weekdayCols = document.querySelectorAll(".weekdayCol");
-weekdayCols.forEach((item) => {
+
+// make each habitCol a drop zone
+let habitCols = document.querySelectorAll(".habitCol");
+habitCols.forEach((item) => {
     item.addEventListener("dragover", (event) => {
         event.preventDefault(); //by default, nothing happens on dragover event
     })
@@ -68,15 +79,18 @@ weekdayCols.forEach((item) => {
         console.log("A dropped event has occured")
 
 
-        // update data in server
-        // let weekday = item.innerHTML; You need to get the weekday element inside item
-        //let weekday = item.firstChild; firstChild returns the first comment, text, or element node
-        //the first element of weekdayCol will always be the weekday
 
     })
 })
 
+// remove right border (except Saturday) to avoid excess bordering
+weekdayCols = document.querySelectorAll(".weekdayCol")
+weekdayCols.forEach((item, index) => {
+    if (index != weekdayCols.length - 1) {
+        item.style.borderRight = "0";
+    }
 
+})
 // const draggableObject = document.getElementById("container");
 // draggableObject.addEventListener("dragstart", (event) => {
 //     console.log(event);

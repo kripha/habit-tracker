@@ -15,7 +15,7 @@ data = {
 
 @app.route('/')
 def testing():
-    return render_template('testing.html')
+    return render_template('index.html')
 
 @app.route('/add-new-habit', methods=['POST'])
 def add_new_habit():

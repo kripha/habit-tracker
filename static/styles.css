@@ -1,0 +1,187 @@
+body, html {
+    height: 100%;
+    text-align: center;
+    font-family: "Poppins", sans-serif;
+    margin: 0;
+    /* font-weight: bold; */
+    font-weight: 600;
+    letter-spacing: 2px;
+    display: flex;
+    flex-direction: column;
+    letter-spacing: 5px;
+
+}
+#titleContainer {
+    height: 5%;
+    display: flex;
+    align-items: center;
+    /* justify-content: center; */
+    font-size: 26px;
+    letter-spacing: 3px;
+    font-weight:500;
+    padding: 5px;
+    margin: 10px;
+    /* position: relative; */
+    position: relative; /* set this element as a reference point for addButton element */
+}
+#dateContainer {
+    /* border: 2px solid orange; */
+    /* position: fixed; */
+    margin: 0 auto;
+    /* border: 2px solid orange; */
+    display: flex;
+    /* width: fit-content; */
+    /* display: inline-block; */
+    justify-content: center;
+    align-items: center;
+    /* height: 150%; */
+    width: 500px;
+    
+
+}
+#dateTitle {
+    display: inline-block;
+}
+.arrow {
+    width: 5%;
+    height: 2%;
+    margin: 5%;
+    /* border: 3px solid red; */
+}
+/* #leftArrow {
+    position: absolute;
+    left: 20px;
+} */
+#addIcon {
+
+    position: absolute;
+    right: 0px;
+    /* padding: 0px 5px; */
+    /* margin-left: 5px; */
+    width: 3%;
+    /* top: 0; */
+
+}
+#weekdaysContainer {
+    display: flex;
+    justify-content: space-around;
+    /* margin-top: 20px; */
+    /* background-color: lightpink; */
+    /* border: 2px solid black; */
+    height: 65%;
+    width: 100%;
+}
+.weekdayCol {
+    width: 100%;
+    border: 4px solid black;
+    display: flex;
+    flex-direction: column;
+}
+.weekday{
+    background-color: #b5e48c;
+    margin-bottom: 10px;
+    font-size: 20px;
+    font-weight: 400;
+    letter-spacing: 5px;
+    border-bottom: 4px solid black;
+    padding: 5px;
+}
+.habitCol {
+    /* border: 3px solid red; */
+    flex-grow: 1; /* grow to fill up space*/
+    display: flex; /* use flex to center habits */
+    flex-direction: column;
+    align-items: center;
+}
+#habitsContainer {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    /* font-weight: bold; */
+    border: 4px solid black;
+    border-top: 0px;
+    height: 8%;
+    padding: 5px;
+}
+.habit {
+    background-color: lightcoral;
+    padding: 10px 30px;
+    display: flex; /* use flex to center habit name */
+    justify-content: center;
+    align-items: center;
+    font-size: larger;
+    border-radius: 30px;
+    margin: 5px;
+    width: 8%;
+    height: 60%;
+    font-size: 18px;
+    
+}
+#goalContainer {
+    border: 4px solid black;
+    border-top: 0px;
+    /* height: 15%; */
+    flex-grow: 1;
+    background-color: #b5e48c;
+    border-bottom: 0;
+    font-size: 18px;
+}
+#inputGoal {
+    background-color: white;
+    border-radius: 30px;
+    height: 65%;
+    margin: 0 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+}
+#addHabitBox {
+    display: none;
+    flex-direction: column;
+    border: 4px solid black;
+    width: 50%;
+    background-color: antiquewhite;
+    position: fixed;
+    left: 25%;
+    top: 25%;
+    line-height: 5%;
+    /* position: relative; */
+}
+#closeContainer {
+    display: flex;
+    flex-direction: row-reverse;
+}
+#closeButton {
+    /* display: flex;
+    flex-direction: row-reverse; */
+    font-size: 32px;
+    margin-right: 2%;
+    /* border: 2px solid red; */
+}
+.inputTitle {
+    margin-top: 10%;
+    letter-spacing: 3px;
+    /* border: 2px solid red; */
+}
+input {
+    border-radius: 5px;
+    border: none;
+    /* border: 1px solid black;
+    box-shadow: 0px 0px 2px #ccc; */
+    letter-spacing: 3px;
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+    font-size: larger;
+    padding: 2%;
+    /* border-style: inset; */
+}
+#submitHabit {
+    margin-top: 10%;
+    margin-bottom: 10%;
+    padding: 10px 20px;
+    border-radius: 30px;
+    font-family: "Poppins", sans-serif;
+    background-color: #b5e48c;
+
+}

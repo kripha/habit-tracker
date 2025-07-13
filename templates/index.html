@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Habit Tracker</title>
+
+    <!-- Add jquery source code to interact with Flask-->
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+    <!-- Add font family -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" 
+    rel="stylesheet">
+
+    <link rel="stylesheet" href="../static/styles.css">
+
+</head>
+<body>
+    <div id="titleContainer">
+        <div id="dateContainer">
+            <img id="leftArrow" class="arrow" src="../static/images/left-arrow.png">
+            <span id="dateTitle">JULY 13-20, 2025</span>
+            <img id="rightArrow" class="arrow" src="../static/images/right-arrow.png">
+        </div>
+        <img id="addIcon" src="../static/images/add2.png">
+    </div>
+    <div id="weekdaysContainer">
+        <div class="weekdayCol">
+            <div class="weekday">SUNDAY</div>
+            <div class="habitCol"></div>
+        </div>
+        <div class="weekdayCol">
+            <div class="weekday">MONDAY</div>
+            <div class="habitCol"></div>
+        </div>
+        <div class="weekdayCol">
+            <div class="weekday">TUESDAY</div>
+            <div class="habitCol"></div>
+        </div>
+        <div class="weekdayCol">
+            <div class="weekday">WEDNESDAY</div>
+            <div class="habitCol"></div>
+        </div>
+        <div class="weekdayCol">
+            <div class="weekday">THURSDAY</div>
+            <div class="habitCol"></div>
+        </div>
+        <div class="weekdayCol">
+            <div class="weekday">FRIDAY</div>
+            <div class="habitCol"></div>
+        </div>
+        <div class="weekdayCol">
+            <div class="weekday">SATURDAY</div>
+            <div class="habitCol"></div>
+        </div>
+    </div>
+    <div id="habitsContainer">
+        <div class="habit" draggable="true">read</div>
+        <div class="habit" draggable="true">yoga</div>
+        <div class="habit" draggable="true">grocery</div>
+    </div>
+    <div id="goalContainer">
+        GOAL
+        <div id="inputGoal">
+           <!-- <p> write here</p> -->
+           abide my phone downtime settings
+        </div>
+    </div>
+    <div id="addHabitBox">
+        <div id="addHabitContent">
+            <!-- <div id="closeButton">&times;</div> -->
+            <div id="closeContainer">
+                <p id="closeButton">&times;</p>
+            </div>
+            <p id="habitName" class="inputTitle">habit name</p>
+            <input id="habitNameInput" type="text" placeholder="...">
+            <p id="habitColor" class="inputTitle" >habit color</p>
+            <input id="habitColorInput"type="text" placeholder="...">
+            <br>
+            <button id="submitHabit">SUBMIT</button>
+        </div>
+    </div>
+</body>
+<script src="../static/main.js"></script>
+</html>
