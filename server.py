@@ -4,13 +4,13 @@ from flask import request, jsonify
 app = Flask(__name__)
 
 data = {
-    "sun": [],
-    "mon": [],
-    "tues": [],
-    "wed": [],
-    "thurs": [],
-    "fri": [],
-    "sat": []
+    "sunday": [],
+    "monday": [],
+    "tuesday": [],
+    "wednesday": [],
+    "thursday": [],
+    "friday": [],
+    "saturday": []
 }
 
 @app.route('/')
@@ -43,6 +43,20 @@ def add_used_habit():
     print(data)
     return jsonify() # return empty content
 
+@app.route('/update-habit-name', methods=['POST'])
+def update_habit_name():
+    global data
+
+    json_data = request.get_json()
+    new_name = json_data['new_habit_name']
+    old_name = json_data['old_habit_name']
+
+    for _, habit_list in data.items():
+        for i, habit in enumerate(habit_list):
+            if habit == old_name:
+                habit_list[i] = new_name
+    print(data)
+    return jsonify()
 
 if __name__ == '__main__':
     app.run(debug=True, port=5001)

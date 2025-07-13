@@ -22,7 +22,7 @@ function addNewHabit(habitCol) {
 
     habitCol.append(newHabitElement);
 
-    let weekday = habitCol.firstElementChild.textContent;
+    let weekday = habitCol.parentElement.firstElementChild.textContent;
     let habitName = newHabitElement.innerHTML;
     $.ajax({
         type: "POST",
@@ -153,6 +153,16 @@ function saveChanges(habitElement, modalBox) {
             item.style.backgroundColor = "#" + newHabitColor.value;
             item.innerHTML = newHabitName.value;
         })
+
+        // update server data
+        $.ajax({
+            type: "POST",
+            url: "update-habit-name",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({"new_habit_name": newHabitName.value, "old_habit_name": oldHabitName})
+        });
+        
         resetModalBox();
         modalBox.style.display = "none";
     }
