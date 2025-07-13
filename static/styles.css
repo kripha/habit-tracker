@@ -9,7 +9,6 @@ body, html {
     display: flex;
     flex-direction: column;
     letter-spacing: 5px;
-
 }
 #titleContainer {
     height: 5%;
@@ -92,6 +91,8 @@ body, html {
     display: flex; /* use flex to center habits */
     flex-direction: column;
     align-items: center;
+    padding: 5%;
+    padding-top: 0;
 }
 #habitsContainer {
     display: flex;
@@ -144,8 +145,8 @@ body, html {
     background-color: antiquewhite;
     position: fixed;
     left: 25%;
-    top: 25%;
-    line-height: 5%;
+    top: 15%;
+    line-height: 0%;
     /* position: relative; */
 }
 #closeContainer {
@@ -155,12 +156,13 @@ body, html {
 #closeButton {
     /* display: flex;
     flex-direction: row-reverse; */
-    font-size: 32px;
+    font-size: 40px;
     margin-right: 2%;
+    font-weight: bold;
     /* border: 2px solid red; */
 }
 .inputTitle {
-    margin-top: 10%;
+    margin-top: 7%;
     letter-spacing: 3px;
     /* border: 2px solid red; */
 }
@@ -176,12 +178,22 @@ input {
     padding: 2%;
     /* border-style: inset; */
 }
+input:focus {
+    border: 2px solid black;
+    outline: none;
+}
 #submitHabit {
-    margin-top: 10%;
+    margin-top: 5%;
     margin-bottom: 10%;
     padding: 10px 20px;
     border-radius: 30px;
     font-family: "Poppins", sans-serif;
     background-color: #b5e48c;
-
+    font-size: 18px;
+    letter-spacing: 3px;
+}
+.errorMessage {
+    color: antiquewhite;
+    letter-spacing: 3px;
+    font-size: smaller;
 }

@@ -1,7 +1,7 @@
 let currDraggedObject = null;
 let count = 0;
 
-// helper functions
+/* helper functions */
 function addNewHabit(habitCol) {
     let newHabitElement = currDraggedObject.cloneNode(true);
 
@@ -49,19 +49,57 @@ function addUsedHabit(newHabitCol) {
 
     // move curr habit to new weekday
     newHabitCol.append(currDraggedObject);
+}
+
+function validHexColor(hexcolor) {
+    // is it 6 characters?
+    if (hexcolor.length != 6) {
+        return false;
+    }
+    // is each character 0-9 or A-F?
+    for( let i = 0; i < hexcolor.length; i++) {
+        let char = hexcolor[i];
+        if ("0123456789ABCDEFabcdef".includes(char) == false) {
+            return false;
+        }
+    }
+    return true;
+}
+
+function resetAddHabitBox() {
+    document.getElementById("missingColor").style.color = "antiquewhite";
+    document.getElementById("missingName").style.color = "antiquewhite";
+    document.getElementById("habitNameInput").value = "";
+    document.getElementById("habitColorInput").value = "";
+}
+
+
+function addNewHabitOption(name, color) {
+    let habitsContainer = document.getElementById("habitsContainer");
+    let newHabitElement = document.createElement("div");
+    newHabitElement.classList.add("habit");
+    newHabitElement.draggable = "true";
+    newHabitElement.innerHTML = name;
+    newHabitElement.style.backgroundColor = "#" + color;
+
+    newHabitElement.addEventListener("dragstart", (event) => {
+        currDraggedObject = event.target;
+    })
+    habitsContainer.appendChild(newHabitElement);
+    // <div class="habit" draggable="true">grocery</div>
 
 }
-// make habits into draggable objects
+
+/* track which habit is being dragged */
 let habits = document.querySelectorAll(".habit");
 habits.forEach((item, index) => {
     item.addEventListener("dragstart", (event) => {
-        currDraggedObject = event.target; //clones deeply, including children
-        /* NOTE: beware of cloning elements with IDs */
+        currDraggedObject = event.target;
     })
 })
 
 
-// make each habitCol a drop zone
+/* make each habit col a droppable zone */
 let habitCols = document.querySelectorAll(".habitCol");
 habitCols.forEach((item) => {
     item.addEventListener("dragover", (event) => {
@@ -76,48 +114,74 @@ habitCols.forEach((item) => {
         } else {
             addUsedHabit(item);
         }
-        console.log("A dropped event has occured")
+        console.log("A dropped event has occurred")
 
 
 
     })
 })
 
-// remove right border (except Saturday) to avoid excess bordering
-weekdayCols = document.querySelectorAll(".weekdayCol")
+/* remove right border (except Saturday) to avoid excess bordering */
+let weekdayCols = document.querySelectorAll(".weekdayCol");
 weekdayCols.forEach((item, index) => {
     if (index != weekdayCols.length - 1) {
         item.style.borderRight = "0";
     }
 
 })
-// const draggableObject = document.getElementById("container");
-// draggableObject.addEventListener("dragstart", (event) => {
-//     console.log(event);
-//     currDraggedObject = event.target.cloneNode(true);
-//     currDraggedObject.id = "container" + count;
-//     count++;
-//     /* keep track of what is being dragged so that if something is dropped in the dropBox
-//     we know what was dropped. because it looks like the droppable object doesn't track what is 
-//     dropped in it */
+
+/* show and close addHabitBox */
+let addHabitBox = document.getElementById("addHabitBox");
+let addIcon = document.getElementById("addIcon");
+addIcon.onclick = (event) => {
+    addHabitBox.style.display = "flex";
+    document.getElementById("habitNameInput").focus();
+}
+let closeButton = document.getElementById("closeButton");
+closeButton.onclick = (event) => {
+    addHabitBox.style.display = "none";
+    resetAddHabitBox();
+}
+
+/* add new habit option when submit button is clicked */
+let submitHabit = document.getElementById("submitHabit");
+submitHabit.onclick = (event) => {
+    let newHabitName = document.getElementById("habitNameInput");
+    let newHabitColor = document.getElementById("habitColorInput");
+    let validInputs = true;
     
-//     // console.log(currDraggedObject);
-// });
+    // check input fields
+    if (newHabitColor.value.length == 0) {
+        document.getElementById("missingColor").style.color = "red";
+        document.getElementById("missingColor").innerHTML = "Missing habit color";
+        newHabitColor.focus();
+        validInputs = false;
+    } else {
+        // check if hex color is valid
+        if (validHexColor(newHabitColor.value) == false) {
+            document.getElementById("missingColor").style.color = "red";
+            document.getElementById("missingColor").innerHTML = "Invalid hex color";
+            validInputs = false;
+            newHabitColor.focus();
+        } else {
+            document.getElementById("missingColor").style.color = "antiquewhite";
+        }
+    }
+    if (newHabitName.value.length == 0) {
+        document.getElementById("missingName").style.color = "red";
+        newHabitName.focus();
+        validInputs = false;
+    } else {
+        document.getElementById("missingName").style.color = "antiquewhite";
+    }
+    
+    // if everything is good to go, add new habit
+    if (validInputs == true) {
+        addHabitBox.style.display = "none";
+        console.log(newHabitName.value.length + " should be the value/name?");
+        addNewHabitOption(newHabitName.value, newHabitColor.value);
+        resetAddHabitBox();
+    }
+}
 
-// const dropBox = document.getElementById("containerB");
-// dropBox.addEventListener("dragover", (event) => {
-//     /* By default, when an element has something dragged over it, nothing happens.
-//     by default, elements are un-droppable */
-//     event.preventDefault(); //this makes the dropBox droppable
-// })
 
-// dropBox.addEventListener("drop", (event) => {
-//     event.preventDefault(); // by default, it'll try to open a link when something is dropped
-//     console.log(event);
-
-//     event.dataTransfer.setData("droppedObjectName", currDraggedObject.innerHTML); // store the value of DraggedElement for future use
-
-//     // make a copy of the currDraggedObject and add it to the dropBox
-//     dropBox.append(currDraggedObject);
-
-// })
