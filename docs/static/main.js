@@ -515,19 +515,23 @@ currGoalElement.id = "currGoal";
 
 inputGoal.addEventListener("keypress", event => {
     if (event.key == "Enter") {
-        inputGoal.remove()
+        if (inputGoal.value.length != 0) {
+            inputGoal.remove()
 
-        // replace input tag with currGoal tag
-        currGoalElement.textContent = inputGoal.value;
-        currGoalElement.addEventListener("click", (event) => {
+            // replace input tag with currGoal tag
+            currGoalElement.textContent = inputGoal.value;
+            currGoalElement.addEventListener("click", (event) => {
 
-            // replace currGoal tag with input tag
-            event.target.remove();
-            document.getElementById("goalContainer").append(inputGoal);
-            inputGoal.focus();
-        });
+                // replace currGoal tag with input tag
+                event.target.remove();
+                document.getElementById("goalContainer").append(inputGoal);
+                inputGoal.focus();
+            });
 
-        document.getElementById("goalContainer").append(currGoalElement);
+            document.getElementById("goalContainer").append(currGoalElement);
+        } else {
+            inputGoal.blur();
+        }
     }
 });
 
