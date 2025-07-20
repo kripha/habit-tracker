@@ -10,8 +10,7 @@ let maxHabitWidth = 0; // track widest habit in columns
 function addNewHabit(habitCol) {
     let newHabitElement = currDraggedObject.cloneNode(true);
 
-    newHabitElement.style.margin = "3px";
-
+    // add eventlisteners
     newHabitElement.addEventListener("mousedown", (event) => {
         generalMouseDown(event, mouseMove, mouseUp);
     });
@@ -51,8 +50,12 @@ function addNewHabit(habitCol) {
 
     // change height and width accordingly
     // newHabitElement.style.height = "10%";
-    // newHabitElement.style.width = "70%";
+    // make width 60% of wednesday col (the widest col)
+    
+    // style
     newHabitElement.style.position = "static";
+    newHabitElement.style.width = "100%"; //NOTE: should we worry about overflow?
+    newHabitElement.style.margin = "3px 0px";
 
     habitCol.append(newHabitElement);
 
