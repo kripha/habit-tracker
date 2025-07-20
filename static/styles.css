@@ -1,5 +1,6 @@
 body, html {
     height: 100%;
+    width: 100%;
     text-align: center;
     font-family: "Poppins", sans-serif;
     margin: 0;
@@ -9,6 +10,9 @@ body, html {
     display: flex;
     flex-direction: column;
     letter-spacing: 5px;
+    padding: 0;
+    overflow-x: hidden;
+    /* overflow-x: scroll; avoids any extra space when children expands and doesn't fit space */
 }
 #titleContainer {
     height: 5%;
@@ -20,6 +24,7 @@ body, html {
     font-weight:500;
     padding: 5px;
     margin: 10px;
+    /* border: 2px solid red; */
     /* position: relative; */
     position: relative; /* set this element as a reference point for addButton element */
 }
@@ -43,9 +48,13 @@ body, html {
 }
 .arrow {
     width: 5%;
-    height: 2%;
+    /* height: 10%; */
     margin: 5%;
     /* border: 3px solid red; */
+}
+.arrow:hover{
+    width: 6%;
+    cursor: pointer;
 }
 #addIcon {
     position: absolute;
@@ -54,22 +63,30 @@ body, html {
     /* margin-left: 5px; */
     width: 3%;
     /* top: 0; */
-
+}
+#addIcon:hover {
+    cursor: pointer;
+    width: 4%;
 }
 #weekdaysContainer {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
+    /* justify-content: space-around; */
     /* margin-top: 20px; */
     /* background-color: lightpink; */
     /* border: 2px solid black; */
     height: 65%;
     width: 100%;
+    box-sizing: border-box;
 }
 .weekdayCol {
-    width: 100%;
+    /* width: 100%; */
+    flex: 1;
+    /* min-width: 0; */
     border: 4px solid black;
     display: flex;
     flex-direction: column;
+    box-sizing: border-box;
 }
 .weekday{
     background-color: #b5e48c;
@@ -79,15 +96,19 @@ body, html {
     letter-spacing: 5px;
     border-bottom: 4px solid black;
     padding: 5px;
+    /* width: 100%; */
+    box-sizing: border-box;
 }
 .habitCol {
     /* border: 3px solid red; */
-    flex-grow: 1; /* grow to fill up space*/
+    flex-grow: 1; /* grow to fill up space */
     display: flex; /* use flex to center habits */
     flex-direction: column;
     align-items: center;
-    padding: 5%;
+    padding: 10%;
     padding-top: 0;
+    /* width: 100%; */
+    /* cursor: grabbing; */
 }
 #habitsContainer {
     display: flex;
@@ -98,6 +119,7 @@ body, html {
     border-top: 0px;
     height: 8%;
     padding: 5px;
+    /* width: 100%; */
 }
 .habit {
     background-color: lightcoral;
@@ -107,11 +129,17 @@ body, html {
     align-items: center;
     font-size: larger;
     border-radius: 30px;
-    margin: 5px;
-    width: 8%;
-    height: 60%;
+    /* margin: 5%; */
+    /* width: 8%; */
+    /* height: 60%; */
     font-size: 18px;
-    
+    cursor: grab;
+    box-sizing: border-box; /* include padding and border in determining width */
+    /* flex-grow: 1; grow to fill up space */
+    /* border: 2px solid green; */
+}
+.habit:hover {
+    transform: scale(1.05);
 }
 #goalContainer {
     border: 4px solid black;
@@ -119,17 +147,37 @@ body, html {
     /* height: 15%; */
     flex-grow: 1;
     background-color: #b5e48c;
-    border-bottom: 0;
+    /* border-bottom: 0; */
     font-size: 18px;
+    /* width: 100%; */
+    display: flex;
+    flex-direction: column;
+    /* text-align: center; */
+}
+#currGoal {
+    background-color: white;
+    border-radius: 30px;
+    height: 65%;
+    margin: 0px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* text-align: center; */
+    font-size: 1.2em;
+    padding: 1em;
+}
+#currGoal:hover {
+    cursor: text;
 }
 #inputGoal {
     background-color: white;
     border-radius: 30px;
-    height: 65%;
-    margin: 0 10px;
+    /* height: 65%; */
+    margin: 0px 10px;
+    margin-bottom: 10px;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    /* align-items: center; */
+    /* justify-content: center; */
     font-size: 22px;
 }
 #modalBox {
@@ -162,6 +210,10 @@ body, html {
     right: 0;
     /* border: 2px solid red; */
 }
+#closeButton:hover {
+    cursor: pointer;
+    font-size: 45px;
+}
 #currHabitName {
     /* margin: auto; */
     margin-top: 7%;
@@ -169,7 +221,7 @@ body, html {
     margin-bottom: 3%;
 }
 .inputTitle {
-    margin-top: 5%;
+    margin-top: 6%;
     letter-spacing: 3px;
     /* border: 2px solid red; */
 }
@@ -189,6 +241,10 @@ input:focus {
     border: 2px solid black;
     outline: none;
 }
+/* input:is(:-webkit-autofill, :autofill) {
+    border: 3px solid darkorange;
+    background-color: white;
+  } */
 #submitHabit, #deleteHabit {
     margin-top: 2%;
     padding: 10px 20px;
