@@ -54,7 +54,7 @@ function addNewHabit(habitCol) {
     
     // style
     newHabitElement.style.position = "static";
-    newHabitElement.style.width = "100%"; //NOTE: should we worry about overflow?
+    newHabitElement.style.width = "100%"; //NOTE: should we worry about overflow? habit width gets big when moved
     newHabitElement.style.margin = "3px 0px";
 
     habitCol.append(newHabitElement);
@@ -86,6 +86,7 @@ function addUsedHabit(newHabitCol) {
     // currDraggedObject.style.height = "10%";
     // currDraggedObject.style.width = "70%";
     // move curr habit to new weekday
+    currDraggedObject.style.width = "100%"; // reset width after drop
     newHabitCol.append(currDraggedObject);
 }
 
@@ -129,6 +130,9 @@ function resetModalBox() {
     if (currHabitName != null) {
         currHabitName.parentElement.removeChild(currHabitName);
     }
+
+    // remove modalOverlay
+    document.getElementById("modalOverlay").style.display = "none";
 }
 
 function addNewHabitOption(name, color) {
@@ -213,10 +217,12 @@ function saveChanges(habitElement, modalBox) {
 
     // if everything is good to go, update habit option
     if (validInputs == true) {
-        let oldHabitName = habitElement.innerHTML;
-        let allHabitElements = document.querySelectorAll("." + oldHabitName.replace(" ", "-"));
-
+        let oldHabitName = habitElement.textContent;
+        let allHabitElements = document.querySelectorAll( "[class=" + "'habit " + oldHabitName.replace(" ", "-") + "']"); //'[class="${7*7}"]'
+        console.log("[class=" + "'" + oldHabitName.replace(" ", "-") + "']");
+        // console.log(allHabitElements + " is allhabitselements");
         allHabitElements.forEach((item) => {
+            console.log(item.textContent + " is the text content");
             item.classList.remove(oldHabitName.replace(" ", "-"));
             item.classList.add(newHabitName.value.replace(" ", "-"));
             item.style.backgroundColor = "#" + newHabitColor.value;
@@ -275,7 +281,7 @@ function rgbToHex(rgb) {
 }
 function openEditBox(modalBox, submitHabit, habitTarget, habitName, habitColor) {
     modalBox.style.display = "flex";
-
+    document.getElementById("modalOverlay").style.display = "flex";
     // replace submit button with save button
     submitHabit.innerHTML = "SAVE";
     submitHabit.onclick = () => saveChanges(habitTarget, modalBox);
@@ -368,7 +374,6 @@ function mouseMove(e) {
     currDraggedObject.style.left = (e.clientX - currDraggedObject.offsetWidth/2) + "px";
     currDraggedObject.style.top = (e.clientY - currDraggedObject.offsetHeight/2) + "px";
 }
-
 function mouseUp(e) {
     console.log("mouseup");
     /* handle drop event */
@@ -400,8 +405,10 @@ function doDragAndDrop(event) {
     // currDraggedObject.style.margin = "0"; i removed margin from .habit style
     currDraggedObject.style.left = (event.clientX - currDraggedObject.offsetWidth/2) + "px";
     currDraggedObject.style.top = (event.clientY - currDraggedObject.offsetHeight/2) + "px";
-    // console.log(event.clientX + ", " + event.clientY + " is the mouse coords");
-    // console.log((currDraggedObject.style.left) + ", " + (currDraggedObject.style.top) + " are the currDraggedObject left, top");
+
+    // keep width the same
+    let {width} = currDraggedObject.getBoundingClientRect();
+    currDraggedObject.style.width = width + "px";
 
     currDraggedObject.style.position = "fixed";
     document.addEventListener("mousemove", mouseMove);
@@ -496,6 +503,7 @@ let addIcon = document.getElementById("addIcon");
 addIcon.onclick = (event) => {
     modalBox.style.display = "flex";
     document.getElementById("habitNameInput").focus();
+    document.getElementById("modalOverlay").style.display = "flex";
 }
 let closeButton = document.getElementById("closeButton");
 closeButton.onclick = (event) => {
