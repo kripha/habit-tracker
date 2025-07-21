@@ -12,48 +12,57 @@ body, html {
     letter-spacing: 5px;
     padding: 0;
     overflow-x: auto;
+    /* overflow-y: scroll; */
     /* overflow-x: scroll; avoids any extra space when children expands and doesn't fit space */
 }
 #titleContainer {
     height: 5%;
     display: flex;
     align-items: center;
-    /* justify-content: center; */
+    justify-content: center;
+    /* margin: auto; */
     font-size: 26px;
     letter-spacing: 3px;
     font-weight:500;
     padding: 5px;
     margin: 10px;
-    /* border: 2px solid red; */
-    /* position: relative; */
-    position: relative; /* set this element as a reference point for addButton element */
+    /* border: 2px solid orange; */
+    /* width: 100%; */
+    /* overflow-x: scroll; */
+    position: relative;
 }
 #dateContainer {
-    /* border: 2px solid orange; */
-    /* position: fixed; */
-    margin: 0 auto;
-    /* border: 2px solid orange; */
     display: flex;
-    /* width: fit-content; */
-    /* display: inline-block; */
     justify-content: center;
     align-items: center;
-    /* height: 150%; */
     width: 500px;
     
-
 }
 #dateTitle {
     display: inline-block;
+    white-space: nowrap;
+    font-size: clamp(12px, 3vw, 28px);
+    /* width: clamp(70%, 6vw, 100%); */
+    /* min-width: 100%; */
+    width: clamp(50%, 55vw, 100%);
+    border: 2px solid red;
 }
 .arrow {
+    /* height: 5%; */
     width: 5%;
+    /* position: absolute; */
     /* height: 10%; */
-    margin: 5%;
+    /* margin: 5%; */
     /* border: 3px solid red; */
 }
+/* #leftArrow {
+    left: clamp(10%, 15vw, 70%);
+}
+#rightArrow {
+    right: clamp(10%, 1vw, 70%);
+} */
 .arrow:hover{
-    width: 6%;
+    height: 5%;
     cursor: pointer;
 }
 #addIcon {
@@ -61,12 +70,12 @@ body, html {
     right: 0px;
     /* padding: 0px 5px; */
     /* margin-left: 5px; */
-    width: 3%;
+    height: 70%;
     /* top: 0; */
 }
 #addIcon:hover {
     cursor: pointer;
-    width: 4%;
+    height: 75%;
 }
 #weekdaysContainer {
     display: flex;
@@ -93,7 +102,8 @@ body, html {
 .weekday{
     background-color: #b5e48c;
     margin-bottom: 10px;
-    font-size: 20px;
+    /* font-size: 20px; */
+    font-size: clamp(12px, 3vw, 20px);
     font-weight: 400;
     letter-spacing: 5px;
     border-bottom: 4px solid black;
@@ -123,9 +133,9 @@ body, html {
     padding: 5px;
     /* width: 100%; */
     flex-grow: 1;
+    overflow-x: scroll; /* scroll through habit options when screen gets smaller*/
 }
 .habit {
-    background-color: lightcoral;
     padding: 10px 30px;
     display: flex; /* use flex to center habit name */
     justify-content: center;
@@ -135,11 +145,21 @@ body, html {
     /* margin: 5%; */
     /* width: 8%; */
     /* height: 60%; */
-    font-size: 18px;
+    font-size: clamp(10px, 3vw, 18px);
     cursor: grab;
     box-sizing: border-box; /* include padding and border in determining width */
-    /* flex-grow: 1; grow to fill up space */
-    /* border: 2px solid green; */
+
+
+    margin: 10px 5px;
+    min-width: 160px;
+    /* height: 10%; */
+    /* height: 20%; */
+}
+.habitName {
+        /* show ellipsis when */
+        overflow: hidden;
+        /* white-space: nowrap; */
+        text-overflow: ellipsis;
 }
 .habit:hover {
     transform: scale(1.05);

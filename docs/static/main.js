@@ -6,6 +6,21 @@ let clicked = false; // track if habit was just clicked
 let dropped = false; // track if a dropped event happened
 let maxHabitWidth = 0; // track widest habit in columns
 
+const MONTHS = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "June",
+    "July",
+    "Aug",
+    "Sept",
+    "Oct",
+    "Nov",
+    "Dec",
+];
+
 /* helper functions */
 function addNewHabit(habitCol) {
     let newHabitElement = currDraggedObject.cloneNode(true);
@@ -55,7 +70,7 @@ function addNewHabit(habitCol) {
     // style
     newHabitElement.style.position = "static";
     newHabitElement.style.width = "100%"; //NOTE: should we worry about overflow? habit width gets big when moved
-    newHabitElement.style.margin = "3px 0px";
+    newHabitElement.style.margin = "3px 5px";
 
     habitCol.append(newHabitElement);
 
@@ -140,11 +155,18 @@ function addNewHabitOption(name, color) {
     let habitsContainer = document.getElementById("habitsContainer");
     let newHabitElement = document.createElement("div");
     newHabitElement.classList.add("habit");
-    newHabitElement.classList.add(name);
-    newHabitElement.draggable = "true";
+    newHabitElement.classList.add(name.replaceAll(" ", "-"));
+    // newHabitElement.draggable = "true";
     newHabitElement.innerHTML = name;
     newHabitElement.style.backgroundColor = "#" + color;
     newHabitElement.style.minWidth = "160px";
+    // newHabitElement.style.width = "clamp(100px, 3vw, 18px)";
+
+    // // add habitName span
+    // let habitName = document.createElement("span");
+    // habitName.classList.add("habitName");
+    // habitName.textContent = name;
+    // newHabitElement.appendChild(habitName);
 
     addHabitOptionEvents(newHabitElement);
     habitsContainer.appendChild(newHabitElement);
@@ -293,12 +315,6 @@ function openEditBox(modalBox, submitHabit, habitTarget, habitName, habitColor) 
     deleteButton.innerHTML = "DELETE";
     deleteButton.onclick = () => deleteHabitOption(habitTarget, modalBox);
     modalContent.appendChild(deleteButton);
-
-    // add currHabit name to top
-    // let currHabitName = document.createElement("p");
-    // currHabitName.id = "currHabitName";
-    // currHabitName.innerHTML = habitTarget.innerHTML.toUpperCase();
-    // document.getElementById("closeContainer").appendChild(currHabitName);
 
     // parse habitColor string "rgb(r, g, b)"
     habitColor = habitColor.replace("rgb(", "").replace(")", "");
@@ -484,6 +500,26 @@ function addHabitOptionEvents(habitOption) {
     });
 }
 
+function setDateTitle(sunDate, satDate) {
+    title = "";
+    // are years diff?
+    if (sunDate.getFullYear() != satDate.getFullYear()) {
+        title = MONTHS[sunDate.getMonth()] + " " + sunDate.getDate() + ", " + sunDate.getFullYear() + " - "
+        + MONTHS[satDate.getMonth()] + " " + satDate.getDate() + ", " + satDate.getFullYear();
+    } else {
+        // years are same, but are months diff?
+        if (sunDate.getMonth() != satDate.getMonth()) {
+            title = MONTHS[sunDate.getMonth()] + " " + sunDate.getDate() + " - "
+            + MONTHS[satDate.getMonth()] + " " + satDate.getDate() + ", " + satDate.getFullYear();
+        } else {
+            // everything same except date
+            title = MONTHS[sunDate.getMonth()] + " " + sunDate.getDate() + " - " + " " + satDate.getDate() + ", " + satDate.getFullYear();
+        }
+    }
+    document.getElementById("dateTitle").textContent = title;
+
+}
+
 /* initialize habit events */
 let habits = document.querySelectorAll(".habit");
 habits.forEach((item) => addHabitOptionEvents(item));
@@ -543,23 +579,26 @@ inputGoal.addEventListener("keypress", event => {
     }
 });
 
+/* Date Title functions */
 
-// add delete button
+// get date of sunday and saturday of current week
+let sunDate = new Date();
+sunDate.setDate(sunDate.getDate() - sunDate.getDay());
+let satDate = new Date(sunDate);
+satDate.setDate(satDate.getDate() + 6);
+setDateTitle(sunDate, satDate);
 
-    // item.addEventListener("dragover", (event) => {
-    //     event.preventDefault(); //by default, nothing happens on dragover event
-    //     // currDraggedObject.style.cursor = "grabbing";
-    //     // event.dataTransfer.dropEffect = "move";
-    // })
-    // item.addEventListener("drop", (event) => {
-    //     event.preventDefault(); //by default, it'll try to open a link when dropped
+// change date with arrows
+document.getElementById("leftArrow").addEventListener("click", event => {
+    sunDate.setDate(sunDate.getDate() - 7);
+    satDate.setDate(satDate.getDate() - 7);
+    setDateTitle(sunDate, satDate);
+})
 
-    //     //if draggedObject is from the header, make a clone
-    //     if (currDraggedObject.parentElement.id == "habitsContainer") {
-    //         addNewHabit(item);
-    //     } else {
-    //         addUsedHabit(item);
-    //     }
-    //     console.log("A dropped event has occurred")
+document.getElementById("rightArrow").addEventListener("click", event => {
+    sunDate.setDate(sunDate.getDate() + 7);
+    satDate.setDate(satDate.getDate() + 7);
+    setDateTitle(sunDate, satDate);
+})
 
-    // })
+
