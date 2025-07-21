@@ -45,7 +45,7 @@ body, html {
     /* width: clamp(70%, 6vw, 100%); */
     /* min-width: 100%; */
     width: clamp(50%, 55vw, 100%);
-    border: 2px solid red;
+    /* border: 2px solid red; */
 }
 .arrow {
     /* height: 5%; */
